@@ -14,7 +14,7 @@
 #include "PhysicsTools/TagAndProbe/interface/ColinsSoperVariables.h"
 
 #include "DataFormats/HeavyIonEvent/interface/Centrality.h"
-#include "DataFormats/HeavyIonEvent/interface/CentralityProvider.h"
+#include "RecoHI/HiCentralityAlgos/interface/CentralityProvider.h"
 
 #include <TList.h>
 #include <TObjString.h>
