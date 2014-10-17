@@ -10,7 +10,7 @@ class TPTreeFiller : public BaseTreeFiller {
         ~TPTreeFiller();
 
         // We declare 'const' the methods which don't change the configuration
-        void init(const edm::Event &iEvent) const ;
+        void init(const edm::Event &iEvent, const edm::EventSetup& iSetup) const ;
         void fill(const reco::CandidateBaseRef &probe, double mass, bool mcTrue=false) const ;
 
     protected:
