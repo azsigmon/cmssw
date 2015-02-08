@@ -393,8 +393,16 @@ bool ThirdHitPrediction::isCompatibleWithMultipleScattering
   Global2DVector c (circle.center().x(), circle.center().y());
 
   float rad2 = (p1 - c).mag2();
-  float a12 = asin(fabsf(areaParallelogram(p1 - c, p2 - c)) / rad2);
-  float a23 = asin(fabsf(areaParallelogram(p2 - c, p3 - c)) / rad2);
+
+  float v;
+
+  v = fabsf(areaParallelogram(p1 - c, p2 - c)) / rad2;
+  if(v > 1.) v = 1.;
+  float a12 = asin(v);
+
+  v = fabsf(areaParallelogram(p2 - c, p3 - c)) / rad2;
+  if(v > 1.) v = 1.;
+  float a23 = asin(v);
 
   float slope = (g2.z() - g1.z()) / a12;
 
@@ -406,10 +414,10 @@ bool ThirdHitPrediction::isCompatibleWithMultipleScattering
   for(vector<const TrackingRecHit*>::const_iterator ih = h.begin(); ih!= h.end(); ih++)
     th.push_back(theTTRecHitBuilder->build(*ih));
 
-  float sigma1_le2 = max(th[0]->parametersError()[0][0],
-                         th[0]->parametersError()[1][1]);
-  float sigma2_le2 = max(th[1]->parametersError()[0][0],
-                         th[1]->parametersError()[1][1]);
+  float sigma1_le2 = max(th[0]->localPositionError().xx(),
+                         th[0]->localPositionError().yy());
+  float sigma2_le2 = max(th[1]->localPositionError().xx(),
+                         th[1]->localPositionError().yy());
 
   float sigma_z2 = (1 + a23/a12)*(1 + a23/a12) * sigma2_le2 +
                    (    a23/a12)*(    a23/a12) * sigma1_le2;
@@ -456,8 +464,8 @@ bool ThirdHitPrediction::isCompatibleWithMultipleScattering
   float sigma_ms  = sigma_z * coshEta;
 
   // Local error squared
-  float sigma_le2 = max(th[2]->parametersError()[0][0],
-                        th[2]->parametersError()[1][1]);
+  float sigma_le2 = max(th[2]->localPositionError().xx(),
+                        th[2]->localPositionError().yy());
 
   return (delta_z*delta_z / (sigma_ms*sigma_ms + sigma_le2 + sigma_z2)
           < nSigma * nSigma);
