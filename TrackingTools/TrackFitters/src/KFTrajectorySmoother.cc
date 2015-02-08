@@ -82,11 +82,33 @@ KFTrajectorySmoother::trajectory(const Trajectory& aTraj) const {
 	continue;
       }
 
-
-
     if (hitcounter != avtm.size())//no propagation needed for first smoothed (==last fitted) hit 
       predTsos = usePropagator->propagate( currTsos, *(hit->surface()) );
 
+//  MODIFICATION STARTS HERE
+    if unlikely(!predTsos.isValid()) {
+      LogDebug("TrackFitters") << "KFTrajectorySmoother: predicted tsos not valid!";
+      if( aTraj.foundHits() > minHits_ ) {
+        LogDebug("TrackFitters") << " retry with last hit removed" << "\n";
+
+        Trajectory newTraj(aTraj);
+        newTraj.pop();
+        return newTraj;
+      } else {
+        if( aTraj.foundHits() == minHits_ )
+        {
+          LogDebug("TrackFitters") << " breaking trajectory" << "\n";
+        }
+        else
+        {
+          LogDebug("TrackFitters") << " killing trajectory" << "\n";
+	  return Trajectory();
+        }
+        break;
+      }
+    }
+
+/*
     if unlikely(!predTsos.isValid()) {
 	LogDebug("TrackFitters") << "KFTrajectorySmoother: predicted tsos not valid!";
 	if( myTraj.foundHits() >= minHits_ ) {
@@ -97,6 +119,9 @@ KFTrajectorySmoother::trajectory(const Trajectory& aTraj) const {
 	}
 	break;      
       }
+*/
+
+// MOFIFICATION ENDS HERE
 
     if(hit->isValid()) {
  

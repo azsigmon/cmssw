@@ -4,6 +4,7 @@ import FWCore.ParameterSet.Config as cms
 # The base for all steps
 allPixelTracks = cms.EDProducer("PixelTrackProducer",
 
+    maxElement = cms.uint32( 100000 ),
     passLabel  = cms.string(''),
 
     # Region
@@ -26,9 +27,11 @@ allPixelTracks = cms.EDProducer("PixelTrackProducer",
      
     # Ordered hits
     OrderedHitsFactoryPSet = cms.PSet(
+        maxElement = cms.uint32( 100000 ),
         ComponentName = cms.string('StandardHitTripletGenerator'),
-        SeedingLayers = cms.InputTag('PixelLayerTriplets'),
+        SeedingLayers = cms.InputTag('firstLayerTriplets'),
         GeneratorPSet = cms.PSet(
+            maxElement = cms.uint32( 100000 ),
             ComponentName = cms.string('PixelTripletLowPtGenerator'),
             checkClusterShape       = cms.bool(False),
             checkMultipleScattering = cms.bool(True),
@@ -44,6 +47,7 @@ allPixelTracks = cms.EDProducer("PixelTrackProducer",
     useFilterWithES = cms.bool(True),
     FilterPSet = cms.PSet(
         ComponentName = cms.string('ClusterShapeTrackFilter'),
+        useClusterShape = cms.bool(True),
         clusterShapeCacheSrc = cms.InputTag("siPixelClusterShapeCache")
 #       ptMin  = cms.double()
 #       ptMax  = cms.double()

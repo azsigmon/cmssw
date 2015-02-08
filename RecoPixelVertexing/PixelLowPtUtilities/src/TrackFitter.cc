@@ -85,7 +85,18 @@ reco::Track* TrackFitter::run
         CircleFromThreePoints(GlobalPoint(0.,0.,0.), points[0], points[1]) :
         CircleFromThreePoints(points[0],points[1],points[2]); 
 
-  int charge = getCharge(points);
+
+  int charge;
+  if(nhits == 2)
+  {
+    vector<GlobalPoint> p; 
+    p.push_back(GlobalPoint(0.,0.,0.));
+    p.push_back(points[0]);
+    p.push_back(points[1]);
+    charge = getCharge(p);
+  }
+  else charge = getCharge(points);
+
   float curvature = circle.curvature();
 
   // pt

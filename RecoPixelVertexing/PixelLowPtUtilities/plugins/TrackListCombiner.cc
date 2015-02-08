@@ -59,8 +59,8 @@ void TrackListCombiner::produce(edm::Event& ev, const edm::EventSetup& es)
     switch(i) 
     {
       case 1:  algo = reco::TrackBase::lowPtTripletStep; break;
-      case 2:  algo = reco::TrackBase::pixelPairStep; break;
-      case 3:  algo = reco::TrackBase::detachedTripletStep; break;
+      case 2:  algo = reco::TrackBase::detachedTripletStep; break;
+      case 3:  algo = reco::TrackBase::pixelPairStep; break;
       default: algo = reco::TrackBase::undefAlgorithm;
     }
 
