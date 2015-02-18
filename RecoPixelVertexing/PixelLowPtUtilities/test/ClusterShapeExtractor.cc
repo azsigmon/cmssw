@@ -204,8 +204,7 @@ bool ClusterShapeExtractor::isSuitable(const PSimHit & simHit)
   bool isOutgoing = (lvec.z()*ldir.z() > 0); 
 
   // From a relevant process? primary or decay
-  bool isRelevant = (simHit.processType() == 2 ||
-                     simHit.processType() == 4);
+  bool isRelevant = true; // (simHit.processType() == ?)
 
   // Fast enough? pt > 50 MeV/c
   bool isFast = (simHit.momentumAtEntry().perp() > 0.050);
@@ -268,7 +267,7 @@ bool ClusterShapeExtractor::checkSimHits
 {
   vector<PSimHit> simHits = theHitAssociator->associateHit(recHit);
 
-  if(simHits.size() == 1)
+  if(simHits.size() >= 1) // FIXME
   {
     simHit = simHits[0];
 

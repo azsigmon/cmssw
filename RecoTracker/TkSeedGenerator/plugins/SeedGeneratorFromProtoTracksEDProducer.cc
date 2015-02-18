@@ -123,13 +123,18 @@ void SeedGeneratorFromProtoTracksEDProducer::produce(edm::Event& ev, const edm::
         if(refHit->isValid()) hits.push_back((Hit)&(*refHit));
       }
       sort(hits.begin(), hits.end(), HitLessByRadius());
-      assert(hits.size()<4);
+// MODIFICATION STARTS HERE
+//      assert(hits.size()<4);
+// MODIFICATION ENDS HERE
       if (hits.size() > 1) {
         double mom_perp = sqrt(proto.momentum().x()*proto.momentum().x()+proto.momentum().y()*proto.momentum().y());
 	GlobalTrackingRegion region(mom_perp, vtx, 0.2, 0.2);
 	SeedFromConsecutiveHitsCreator seedCreator;
 	seedCreator.init(region, es, 0);
-	seedCreator.makeSeed(*result, SeedingHitSet(hits[0], hits[1], hits.size() >2 ? hits[2] : SeedingHitSet::nullPtr() ));
+// MODIFICATION STARTS HERE
+//	seedCreator.makeSeed(*result, SeedingHitSet(hits[0], hits[1], hits.size() >2 ? hits[2] : SeedingHitSet::nullPtr() ));
+        seedCreator.makeSeed(*result, SeedingHitSet(hits) );
+// MODIFICATION ENDS HERE
       }
     }
   } 

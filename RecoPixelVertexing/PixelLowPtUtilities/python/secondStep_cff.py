@@ -64,6 +64,16 @@ secondCkfTrajectoryBuilder.trajectoryFilter   = cms.PSet(refToPSet_ = cms.string
 secondCkfTrajectoryBuilder.inOutTrajectoryFilter  = cms.PSet(refToPSet_ = cms.string('MinBiasCkfTrajectoryFilter'))
 secondCkfTrajectoryBuilder.clustersToSkip = cms.InputTag('secondClusters')
 
+# not needed? FIXME
+secondCkfTrajectoryBuilder.maxCand = 5
+secondCkfTrajectoryBuilder.intermediateCleaning = False
+secondCkfTrajectoryBuilder.alwaysUseInvalidHits = False
+secondCkfTrajectoryBuilder.useSameTrajFilter = cms.bool(True)
+
+# FIXME
+secondCkfTrajectoryBuilder.maxPtForLooperReconstruction   = cms.double(0.0)
+
+
 #################################
 # Secondary track candidates
 import RecoTracker.CkfPattern.CkfTrackCandidates_cfi

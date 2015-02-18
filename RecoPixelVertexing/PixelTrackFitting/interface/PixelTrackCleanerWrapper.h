@@ -36,7 +36,12 @@ public:
        const std::vector<const TrackingRecHit *> & trhs = it->second;
        assert(!(trhs.size()<2));
        if (trhs.size()<2) continue;
-       SeedingHitSet ttrhs( hitMap[trhs[0]], hitMap[trhs[1]], trhs.size()>2 ? hitMap[trhs[2]] : SeedingHitSet::nullPtr()); 
+// MODIFICATION STARTS HERE
+       SeedingHitSet ttrhs;
+       for(unsigned int i = 0; i < trhs.size(); i++)
+         ttrhs.set(i,  hitMap[trhs[i]]);
+//       SeedingHitSet ttrhs( hitMap[trhs[0]], hitMap[trhs[1]], trhs.size()>2 ? hitMap[trhs[2]] : SeedingHitSet::nullPtr()); 
+// MODIFICATION ENDS HERE
        finalT_TTRHs.push_back( pixeltrackfitting::TrackWithTTRHs(it->first, ttrhs));
     }
     return finalT_TTRHs;

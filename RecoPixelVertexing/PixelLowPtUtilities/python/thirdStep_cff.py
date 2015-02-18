@@ -46,7 +46,7 @@ thirdLayerPairs = cms.EDProducer("SeedingLayersEDProducer",
 import RecoPixelVertexing.PixelLowPtUtilities.AllPixelTracks_cfi
 pixelTertTracks = RecoPixelVertexing.PixelLowPtUtilities.AllPixelTracks_cfi.allPixelTracks.clone()
 pixelTertTracks.passLabel = 'Pixel pair tracks with vertex constraint'
-pixelTertTracks.RegionFactoryPSet.RegionPSet.originRadius = 0.4 # 0.2
+pixelTertTracks.RegionFactoryPSet.RegionPSet.originRadius = 0.2
 pixelTertTracks.RegionFactoryPSet.RegionPSet.useFoundVertices = True
 pixelTertTracks.OrderedHitsFactoryPSet.ComponentName = 'StandardHitPairGenerator'
 pixelTertTracks.OrderedHitsFactoryPSet.SeedingLayers = 'thirdLayerPairs'
@@ -76,6 +76,15 @@ thirdCkfTrajectoryBuilder.MeasurementTrackerName = 'thirdMeasurementTracker'
 thirdCkfTrajectoryBuilder.trajectoryFilter   = cms.PSet(refToPSet_ = cms.string('MinBiasCkfTrajectoryFilter'))
 thirdCkfTrajectoryBuilder.inOutTrajectoryFilter   = cms.PSet(refToPSet_ = cms.string('MinBiasCkfTrajectoryFilter'))
 thirdCkfTrajectoryBuilder.clustersToSkip = cms.InputTag('thirdClusters')
+
+# FIXME not needed?
+thirdCkfTrajectoryBuilder.maxCand = 5
+thirdCkfTrajectoryBuilder.intermediateCleaning = False
+thirdCkfTrajectoryBuilder.alwaysUseInvalidHits = False
+thirdCkfTrajectoryBuilder.useSameTrajFilter = cms.bool(True)
+
+# FIXME
+thirdCkfTrajectoryBuilder.maxPtForLooperReconstruction   = cms.double(0.0)
 
 #################################
 # Tertiary track candidates

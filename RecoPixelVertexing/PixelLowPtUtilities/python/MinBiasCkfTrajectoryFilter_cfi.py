@@ -7,6 +7,9 @@ ckfBaseTrajectoryFilterForMinBias = TrackingTools.TrajectoryFiltering.Trajectory
 ckfBaseTrajectoryFilterForMinBias.minimumNumberOfHits = 3
 ckfBaseTrajectoryFilterForMinBias.minPt               = 0.075
 
+# FIXME
+ckfBaseTrajectoryFilterForMinBias.maxPtForLooperReconstruction   = cms.double(0.0)
+
 from RecoPixelVertexing.PixelLowPtUtilities.ClusterShapeHitFilterESProducer_cfi import *
 from RecoPixelVertexing.PixelLowPtUtilities.ClusterShapeTrajectoryFilter_cfi import *
 
