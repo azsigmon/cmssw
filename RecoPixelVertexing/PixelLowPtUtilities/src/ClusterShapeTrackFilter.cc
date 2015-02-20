@@ -151,6 +151,8 @@ bool ClusterShapeTrackFilter::operator()
   // if(recHits.size() <= 2) return true;
   if(recHits.size() <= 1) return true;
 
+cerr << " recHits.size() == " << recHits.size() << endl;
+
   // Check pt
   if(track->pt() < ptMin ||
      track->pt() > ptMax)
