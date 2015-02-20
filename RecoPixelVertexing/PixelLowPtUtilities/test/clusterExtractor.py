@@ -3,33 +3,20 @@ import FWCore.ParameterSet.Config as cms
 process = cms.Process("ClusterShape")
 
 process.load("Configuration.StandardSequences.Services_cff")
-process.load("SimGeneral.MixingModule.mixNoPU_cfi")
 process.load("Configuration.StandardSequences.Simulation_cff")
 process.load("Configuration.StandardSequences.FrontierConditions_GlobalTag_cff")
 process.load("Configuration.StandardSequences.Geometry_cff")
 process.load("Configuration.StandardSequences.MagneticField_cff")
 process.load("Configuration.StandardSequences.RawToDigi_cff")
 
-process.load("SimGeneral.TrackingAnalysis.trackingParticles_cfi")
-process.load("SimTracker.TrackAssociation.TrackAssociatorByHits_cfi")
-
-process.load("RecoLocalTracker.Configuration.RecoLocalTracker_cff")
-
-process.load("RecoVertex.BeamSpotProducer.BeamSpot_cfi")
-process.load("RecoPixelVertexing.PixelLowPtUtilities.MinBiasTracking_cff")
-
-process.load("FWCore.MessageLogger.MessageLogger_cfi")
-
 ###############################################################################
 # Message logger
+process.load("FWCore.MessageLogger.MessageLogger_cfi")
+
 process.MessageLogger = cms.Service("MessageLogger",
-     categories = cms.untracked.vstring(
-      'MinBiasTracking'
-    ),
     debugModules = cms.untracked.vstring('*'),
      cerr = cms.untracked.PSet(
          threshold = cms.untracked.string('DEBUG'),
-#        threshold = cms.untracked.string('ERROR'),
          DEBUG = cms.untracked.PSet(
              limit = cms.untracked.int32(0)
          )
@@ -50,8 +37,7 @@ process.source = cms.Source("PoolSource",
 )
 
 process.maxEvents = cms.untracked.PSet(
-     input = cms.untracked.int32(10000)
-#    input = cms.untracked.int32(10)
+     input = cms.untracked.int32(100000)
 )
 
 ###############################################################################
@@ -75,23 +61,25 @@ process.clusterShape = cms.EDAnalyzer("ClusterShapeExtractor",
       'TrackerHitsPixelEndcapHighTof')
 )
 
-process.load("RecoPixelVertexing.PixelLowPtUtilities.siPixelClusterShapeCache_cfi")
+###############################################################################
+process.load("SimGeneral.MixingModule.mixNoPU_cfi")
+process.load("RecoVertex.BeamSpotProducer.BeamSpot_cfi")
 
-process.load("RecoTracker.MeasurementDet.MeasurementTrackerEventProducer_cfi")
-
+process.load("RecoLocalTracker.Configuration.RecoLocalTracker_cff")
 process.load("RecoLocalTracker.SiPixelClusterizer.SiPixelClusterizer_cfi")
 process.load("RecoLocalTracker.SiPixelRecHits.SiPixelRecHits_cfi")
+
+process.load("RecoPixelVertexing.PixelLowPtUtilities.siPixelClusterShapeCache_cfi")
+process.load("RecoPixelVertexing.PixelLowPtUtilities.MinBiasTracking_cff")
+
+process.load("RecoTracker.MeasurementDet.MeasurementTrackerEventProducer_cfi")
 
 ###############################################################################
 # Paths
 process.simu  = cms.Path(process.mix
-#                      * process.trackingParticles
                        * process.offlineBeamSpot)
 
 process.digi  = cms.Path(process.RawToDigi)
-
-#process.lreco = cms.Path(process.trackerlocalreco
-#                       * process.clusterShape)
 
 process.lreco = cms.Path(process.trackerlocalreco
                        * process.siPixelClusters

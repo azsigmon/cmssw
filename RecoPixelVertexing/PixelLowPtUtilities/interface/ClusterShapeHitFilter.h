@@ -156,11 +156,14 @@ class ClusterShapeHitFilter
   typedef TrajectoryFilter::Record Record;
   //  typedef CkfComponentsRecord Record;
 
+// MODIFICATION STARTS HERE
   ClusterShapeHitFilter(const TrackerGeometry * theTracker_,
                         const MagneticField          * theMagneticField_,
                         const SiPixelLorentzAngle    * theSiPixelLorentzAngle_,
                         const SiStripLorentzAngle    * theSiStripLorentzAngle_,
-                        const std::string            * use_PixelShapeFile_);
+                        const std::string            * use_PixelShapeFile_,
+                        const std::string            * use_StripShapeFile_);
+// MODIFICATION ENDS HERE
  
   ~ClusterShapeHitFilter();
 
@@ -263,6 +266,9 @@ class ClusterShapeHitFilter
   const SiStripLorentzAngle * theSiStripLorentzAngle;
 
   const std::string * PixelShapeFile;
+// MODIFICATION STARTS HERE
+  const std::string * StripShapeFile;
+// MODIFICATION ENDS HERE
 
   std::unordered_map<unsigned int, PixelData> pixelData;
 

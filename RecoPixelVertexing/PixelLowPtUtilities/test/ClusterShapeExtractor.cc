@@ -267,7 +267,7 @@ bool ClusterShapeExtractor::checkSimHits
 {
   vector<PSimHit> simHits = theHitAssociator->associateHit(recHit);
 
-  if(simHits.size() >= 1) // FIXME
+  if(simHits.size() == 1) // FIXME >= 1
   {
     simHit = simHits[0];
 

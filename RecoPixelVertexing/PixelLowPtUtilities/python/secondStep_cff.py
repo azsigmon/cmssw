@@ -15,7 +15,8 @@ secondClusters = cms.EDProducer("TrackClusterRemover",
 from RecoPixelVertexing.PixelLowPtUtilities.common_cff import BPixError
 from RecoPixelVertexing.PixelLowPtUtilities.common_cff import FPixError
 secondLayerTriplets = cms.EDProducer("SeedingLayersEDProducer",
-    layerList = cms.vstring('BPix1+BPix2+BPix3',
+    layerList = cms.vstring(
+        'BPix1+BPix2+BPix3',
         'BPix1+BPix2+FPix1_pos',
         'BPix1+BPix2+FPix1_neg',
         'BPix1+FPix1_pos+FPix2_pos',
@@ -39,7 +40,7 @@ secondLayerTriplets = cms.EDProducer("SeedingLayersEDProducer",
 import RecoPixelVertexing.PixelLowPtUtilities.AllPixelTracks_cfi
 pixelSecoTracks = RecoPixelVertexing.PixelLowPtUtilities.AllPixelTracks_cfi.allPixelTracks.clone()
 pixelSecoTracks.passLabel = 'Pixel triplet tracks without vertex constraint'
-pixelSecoTracks.RegionFactoryPSet.RegionPSet.originRadius = 3.5
+pixelSecoTracks.RegionFactoryPSet.RegionPSet.originRadius = cms.double(3.5)
 pixelSecoTracks.OrderedHitsFactoryPSet.SeedingLayers = 'secondLayerTriplets'
 
 #################################
@@ -52,27 +53,25 @@ secoSeeds.InputCollection = 'pixelSecoTracks'
 # Secondary measurement tracker
 import RecoTracker.MeasurementDet.MeasurementTrackerESProducer_cfi
 secondMeasurementTracker = RecoTracker.MeasurementDet.MeasurementTrackerESProducer_cfi.MeasurementTracker.clone()
-secondMeasurementTracker.ComponentName        = 'secondMeasurementTracker'
+secondMeasurementTracker.ComponentName = 'secondMeasurementTracker'
 
 #################################
 # Secondary trajectory builder
 import RecoTracker.CkfPattern.GroupedCkfTrajectoryBuilder_cfi
 secondCkfTrajectoryBuilder = RecoTracker.CkfPattern.GroupedCkfTrajectoryBuilder_cfi.GroupedCkfTrajectoryBuilder.clone()
-#secondCkfTrajectoryBuilder.ComponentName      = 'secondCkfTrajectoryBuilder'
 secondCkfTrajectoryBuilder.MeasurementTrackerName = 'secondMeasurementTracker'
-secondCkfTrajectoryBuilder.trajectoryFilter   = cms.PSet(refToPSet_ = cms.string('MinBiasCkfTrajectoryFilter'))
-secondCkfTrajectoryBuilder.inOutTrajectoryFilter  = cms.PSet(refToPSet_ = cms.string('MinBiasCkfTrajectoryFilter'))
+secondCkfTrajectoryBuilder.trajectoryFilter      = cms.PSet(refToPSet_ = cms.string('MinBiasCkfTrajectoryFilter'))
+secondCkfTrajectoryBuilder.inOutTrajectoryFilter = cms.PSet(refToPSet_ = cms.string('MinBiasCkfTrajectoryFilter'))
 secondCkfTrajectoryBuilder.clustersToSkip = cms.InputTag('secondClusters')
 
 # not needed? FIXME
 secondCkfTrajectoryBuilder.maxCand = 5
-secondCkfTrajectoryBuilder.intermediateCleaning = False
-secondCkfTrajectoryBuilder.alwaysUseInvalidHits = False
-secondCkfTrajectoryBuilder.useSameTrajFilter = cms.bool(True)
+secondCkfTrajectoryBuilder.intermediateCleaning = cms.bool(False)
+secondCkfTrajectoryBuilder.alwaysUseInvalidHits = cms.bool(False)
+secondCkfTrajectoryBuilder.useSameTrajFilter    = cms.bool(True)
 
 # FIXME
-secondCkfTrajectoryBuilder.maxPtForLooperReconstruction   = cms.double(0.0)
-
+# secondCkfTrajectoryBuilder.maxPtForLooperReconstruction = cms.double(0.0)
 
 #################################
 # Secondary track candidates
@@ -89,6 +88,8 @@ secoTrackCandidates.doSeedingRegionRebuilding = cms.bool(False)
 # Global secondary tracks
 import RecoTracker.TrackProducer.CTFFinalFitWithMaterial_cfi
 globalSecoTracks = RecoTracker.TrackProducer.CTFFinalFitWithMaterial_cfi.ctfWithMaterialTracks.clone()
-globalSecoTracks.src                = 'secoTrackCandidates'
-globalSecoTracks.TrajectoryInEvent  = cms.bool(True)
+globalSecoTracks.src               = 'secoTrackCandidates'
+globalSecoTracks.TrajectoryInEvent = cms.bool(True)
+globalSecoTracks.MinNumberOfHits   = cms.int32(3)
+
 

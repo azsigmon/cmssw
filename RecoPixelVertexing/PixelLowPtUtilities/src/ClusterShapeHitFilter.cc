@@ -36,17 +36,21 @@ using namespace std;
 
 
 /*****************************************************************************/
+// MODIFICATION STARTS HERE
 ClusterShapeHitFilter::ClusterShapeHitFilter
   (const TrackerGeometry * theTracker_,
    const MagneticField          * theMagneticField_,
    const SiPixelLorentzAngle    * theSiPixelLorentzAngle_,
    const SiStripLorentzAngle    * theSiStripLorentzAngle_,
-   const std::string            * use_PixelShapeFile_)
+   const std::string            * use_PixelShapeFile_,
+   const std::string            * use_StripShapeFile_)
    : theTracker(theTracker_),
      theMagneticField(theMagneticField_),
      theSiPixelLorentzAngle(theSiPixelLorentzAngle_),
      theSiStripLorentzAngle(theSiStripLorentzAngle_),
-     PixelShapeFile(use_PixelShapeFile_)
+     PixelShapeFile(use_PixelShapeFile_),
+     StripShapeFile(use_StripShapeFile_)
+// MODIFICATION ENDS HERE
 {
   // Load pixel limits
   loadPixelLimits();
@@ -110,7 +114,9 @@ void ClusterShapeHitFilter::loadStripLimits()
 {
   // Load strip
   edm::FileInPath
-    fileInPath("RecoPixelVertexing/PixelLowPtUtilities/data/stripShape.par");
+// MODIFICATION STARTS HERE
+    fileInPath(StripShapeFile->c_str());
+// MODIFICATION ENDS HERE
   ifstream inFile(fileInPath.fullPath().c_str());
 
   

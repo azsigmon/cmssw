@@ -11,7 +11,10 @@
 /*****************************************************************************/
 ClusterShapeHitFilterESProducer::ClusterShapeHitFilterESProducer
   (const edm::ParameterSet& iConfig):
-  use_PixelShapeFile( iConfig.exists("PixelShapeFile")?iConfig.getParameter<std::string>("PixelShapeFile"):"RecoPixelVertexing/PixelLowPtUtilities/data/pixelShape.par")
+// MODIFICATION STARTS HERE
+  use_PixelShapeFile( iConfig.exists("PixelShapeFile")?iConfig.getParameter<std::string>("PixelShapeFile"):"RecoPixelVertexing/PixelLowPtUtilities/data/pixelShape.par"),
+  use_StripShapeFile( iConfig.exists("StripShapeFile")?iConfig.getParameter<std::string>("StripShapeFile"):"RecoPixelVertexing/PixelLowPtUtilities/data/stripShape.par")
+// MODIFICATION ENDS HERE
 {
   
   std::string componentName = iConfig.getParameter<std::string>("ComponentName");
@@ -68,7 +71,10 @@ ClusterShapeHitFilterESProducer::produce
                                       field.product(),
                                       pixel.product(),
                                       strip.product(),
-                                      &use_PixelShapeFile));
+// MODIFICATION STARTS HERE
+                                      &use_PixelShapeFile,
+                                      &use_StripShapeFile));
+// MODIFICATION ENDS HERE
   aFilter->setShapeCuts(cutOnPixelShape_, cutOnStripShape_);
   aFilter->setChargeCuts(cutOnPixelCharge_, minGoodPixelCharge_, cutOnStripCharge_,
     minGoodStripCharge_);

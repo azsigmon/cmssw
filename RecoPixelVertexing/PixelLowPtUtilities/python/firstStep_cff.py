@@ -6,7 +6,8 @@ import RecoPixelVertexing.PixelLowPtUtilities.AllPixelTracks_cfi
 from RecoPixelVertexing.PixelLowPtUtilities.common_cff import BPixError
 from RecoPixelVertexing.PixelLowPtUtilities.common_cff import FPixError
 firstLayerTriplets = cms.EDProducer("SeedingLayersEDProducer",
-    layerList = cms.vstring('BPix1+BPix2+BPix3',
+    layerList = cms.vstring(
+        'BPix1+BPix2+BPix3',
         'BPix1+BPix2+FPix1_pos',
         'BPix1+BPix2+FPix1_neg',
         'BPix1+FPix1_pos+FPix2_pos',
@@ -27,6 +28,8 @@ firstLayerTriplets = cms.EDProducer("SeedingLayersEDProducer",
 # Pixel-3 proto tracks
 pixel3ProtoTracks = RecoPixelVertexing.PixelLowPtUtilities.AllPixelTracks_cfi.allPixelTracks.clone()
 pixel3ProtoTracks.passLabel = 'Pixel triplet tracks for vertexing'
+
+# FIXME
 pixel3ProtoTracks.RegionFactoryPSet.ptMin = cms.double(0.2)
 
 ############################

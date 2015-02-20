@@ -147,8 +147,9 @@ bool ClusterShapeTrackFilter::operator()
    const vector<const TrackingRecHit *> & recHits,
    const TrackerTopology *tTopo ) const
 {
-  // Do not even look at pairs
-  if(recHits.size() <= 2) return true;
+  // Do not even look at pairs FIXME ?
+  // if(recHits.size() <= 2) return true;
+  if(recHits.size() <= 1) return true;
 
   // Check pt
   if(track->pt() < ptMin ||

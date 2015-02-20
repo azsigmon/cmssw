@@ -49,6 +49,9 @@ class ClusterShapeHitFilterESProducer : public edm::ESProducer
 
  private:
   const std::string use_PixelShapeFile;
+// MODIFICATION STARTS HERE
+  const std::string use_StripShapeFile;
+// MODIFICATION ENDS HERE
   bool cutOnPixelCharge_, cutOnStripCharge_;
   float minGoodPixelCharge_, minGoodStripCharge_;
   bool cutOnPixelShape_, cutOnStripShape_;

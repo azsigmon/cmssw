@@ -16,7 +16,8 @@ thirdClusters = cms.EDProducer("TrackClusterRemover",
 from RecoPixelVertexing.PixelLowPtUtilities.common_cff import BPixError
 from RecoPixelVertexing.PixelLowPtUtilities.common_cff import FPixError
 thirdLayerPairs = cms.EDProducer("SeedingLayersEDProducer",
-    layerList = cms.vstring('BPix1+BPix2',
+    layerList = cms.vstring(
+        'BPix1+BPix2',
         'BPix1+BPix3',
         'BPix2+BPix3',
         'BPix1+FPix1_pos',
@@ -24,9 +25,10 @@ thirdLayerPairs = cms.EDProducer("SeedingLayersEDProducer",
         'BPix1+FPix2_pos',
         'BPix1+FPix2_neg',
         'BPix2+FPix1_pos',
-        'BPix2+FPix1_neg',
-        'BPix2+FPix2_pos',
-        'BPix2+FPix2_neg'),
+        'BPix2+FPix1_neg'),
+# FIXME
+#       'BPix2+FPix2_pos',
+#       'BPix2+FPix2_neg'),
     BPix = cms.PSet(
         BPixError,
         TTRHBuilder = cms.string('TTRHBuilderWithoutAngle4PixelTriplets'),
@@ -46,14 +48,15 @@ thirdLayerPairs = cms.EDProducer("SeedingLayersEDProducer",
 import RecoPixelVertexing.PixelLowPtUtilities.AllPixelTracks_cfi
 pixelTertTracks = RecoPixelVertexing.PixelLowPtUtilities.AllPixelTracks_cfi.allPixelTracks.clone()
 pixelTertTracks.passLabel = 'Pixel pair tracks with vertex constraint'
-pixelTertTracks.RegionFactoryPSet.RegionPSet.originRadius = 0.2
-pixelTertTracks.RegionFactoryPSet.RegionPSet.useFoundVertices = True
+pixelTertTracks.RegionFactoryPSet.RegionPSet.originRadius = cms.double(0.2)
+pixelTertTracks.RegionFactoryPSet.RegionPSet.useFoundVertices = cms.bool(True)
 pixelTertTracks.OrderedHitsFactoryPSet.ComponentName = 'StandardHitPairGenerator'
 pixelTertTracks.OrderedHitsFactoryPSet.SeedingLayers = 'thirdLayerPairs'
 pixelTertTracks.OrderedHitsFactoryPSet.GeneratorPSet.ComponentName = 'StandardHitPairGenerator'
-pixelTertTracks.FilterPSet = cms.PSet(
-        ComponentName = cms.string('none')
-    )
+# FIXME
+#pixelTertTracks.FilterPSet = cms.PSet(
+#        ComponentName = cms.string('none')
+#    )
 
 #################################
 # Tertiary seeds
@@ -65,16 +68,15 @@ tertSeeds.InputCollection = 'pixelTertTracks'
 # Tertiary measurement tracker
 import RecoTracker.MeasurementDet.MeasurementTrackerESProducer_cfi
 thirdMeasurementTracker = RecoTracker.MeasurementDet.MeasurementTrackerESProducer_cfi.MeasurementTracker.clone()
-thirdMeasurementTracker.ComponentName        = 'thirdMeasurementTracker'
+thirdMeasurementTracker.ComponentName = 'thirdMeasurementTracker'
 
 #################################
 # Tertiary trajectory builder
 import RecoTracker.CkfPattern.GroupedCkfTrajectoryBuilder_cfi
 thirdCkfTrajectoryBuilder = RecoTracker.CkfPattern.GroupedCkfTrajectoryBuilder_cfi.GroupedCkfTrajectoryBuilder.clone()
-#thirdCkfTrajectoryBuilder.ComponentName          = 'thirdCkfTrajectoryBuilder'
 thirdCkfTrajectoryBuilder.MeasurementTrackerName = 'thirdMeasurementTracker'
-thirdCkfTrajectoryBuilder.trajectoryFilter   = cms.PSet(refToPSet_ = cms.string('MinBiasCkfTrajectoryFilter'))
-thirdCkfTrajectoryBuilder.inOutTrajectoryFilter   = cms.PSet(refToPSet_ = cms.string('MinBiasCkfTrajectoryFilter'))
+thirdCkfTrajectoryBuilder.trajectoryFilter      = cms.PSet(refToPSet_ = cms.string('MinBiasCkfTrajectoryFilter'))
+thirdCkfTrajectoryBuilder.inOutTrajectoryFilter = cms.PSet(refToPSet_ = cms.string('MinBiasCkfTrajectoryFilter'))
 thirdCkfTrajectoryBuilder.clustersToSkip = cms.InputTag('thirdClusters')
 
 # FIXME not needed?
@@ -84,7 +86,7 @@ thirdCkfTrajectoryBuilder.alwaysUseInvalidHits = False
 thirdCkfTrajectoryBuilder.useSameTrajFilter = cms.bool(True)
 
 # FIXME
-thirdCkfTrajectoryBuilder.maxPtForLooperReconstruction   = cms.double(0.0)
+# thirdCkfTrajectoryBuilder.maxPtForLooperReconstruction = cms.double(0.0)
 
 #################################
 # Tertiary track candidates
@@ -101,6 +103,7 @@ tertTrackCandidates.doSeedingRegionRebuilding = cms.bool(False)
 # Global tertiary tracks
 import RecoTracker.TrackProducer.CTFFinalFitWithMaterial_cfi
 globalTertTracks = RecoTracker.TrackProducer.CTFFinalFitWithMaterial_cfi.ctfWithMaterialTracks.clone()
-globalTertTracks.src                = 'tertTrackCandidates'
-globalTertTracks.TrajectoryInEvent  = cms.bool(True)
+globalTertTracks.src               = 'tertTrackCandidates'
+globalTertTracks.TrajectoryInEvent = cms.bool(True)
+globalTertTracks.MinNumberOfHits   = cms.int32(3)
 

@@ -49,8 +49,6 @@ allPixelTracks = cms.EDProducer("PixelTrackProducer",
         ComponentName = cms.string('ClusterShapeTrackFilter'),
         useClusterShape = cms.bool(True),
         clusterShapeCacheSrc = cms.InputTag("siPixelClusterShapeCache")
-#       ptMin  = cms.double()
-#       ptMax  = cms.double()
     ),
 
     # Cleaner
