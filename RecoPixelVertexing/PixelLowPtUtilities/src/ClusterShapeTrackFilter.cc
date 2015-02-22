@@ -83,8 +83,9 @@ vector<GlobalVector> ClusterShapeTrackFilter::getGlobalDirs
   //
   vector<GlobalVector> globalDirs;
 
-  // Determine circle
-  CircleFromThreePoints circle(g[0],g[1],g[2]);
+  // Determine circle, use origin for pairs
+  GlobalPoint origin(0.,0.,0.); // beam spot?, FIXME
+  CircleFromThreePoints circle(g[0],g[1], (g.size() == 3 ? g[2] : origin));
 
   if(circle.curvature() != 0.)
   {
@@ -147,11 +148,7 @@ bool ClusterShapeTrackFilter::operator()
    const vector<const TrackingRecHit *> & recHits,
    const TrackerTopology *tTopo ) const
 {
-  // Do not even look at pairs FIXME ?
-  // if(recHits.size() <= 2) return true;
   if(recHits.size() <= 1) return true;
-
-cerr << " recHits.size() == " << recHits.size() << endl;
 
   // Check pt
   if(track->pt() < ptMin ||
