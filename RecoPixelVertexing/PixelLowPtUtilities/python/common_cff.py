@@ -37,7 +37,7 @@ GroupedCkfTrajectoryBuilder.inOutTrajectoryFilter = cms.PSet(refToPSet_ = cms.st
 GroupedCkfTrajectoryBuilder.useSameTrajFilter = cms.bool(True)
 
 # FIXME
-GroupedCkfTrajectoryBuilder.maxPtForLooperReconstruction    = cms.double(0.0)
+# GroupedCkfTrajectoryBuilder.maxPtForLooperReconstruction    = cms.double(0.0)
  
 # Propagator, pion mass
 MaterialPropagator.Mass          = cms.double(0.139)
