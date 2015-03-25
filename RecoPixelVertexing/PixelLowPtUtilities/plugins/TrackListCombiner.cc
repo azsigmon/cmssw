@@ -115,6 +115,8 @@ void TrackListCombiner::produce(edm::Event& ev, const edm::EventSetup& es)
 
   // Save the tracking recHits
   edm::OrphanHandle<TrackingRecHitCollection> theRecoHits = ev.put(recoHits);
+
+  edm::RefProd<TrackingRecHitCollection> hitCollProd(theRecoHits);
   
   // Create the track extras and add the references to the rechits
   unsigned hits = 0;
@@ -135,10 +137,14 @@ void TrackListCombiner::produce(edm::Event& ev, const edm::EventSetup& es)
                                  aTrack.innerDetId(),
                                  aTrack.seedDirection(),
                                  aTrack.seedRef());
-    
     unsigned nHits = aTrack.recHitsSize();
+/*
     for ( unsigned int ih=0; ih<nHits; ++ih)
       aTrackExtra.add(TrackingRecHitRef(theRecoHits,hits++));
+*/
+    aTrackExtra.setHits(hitCollProd, hits, nHits);
+    hits += nHits;
+    
     recoTrackExtras->push_back(aTrackExtra);
   }
   
