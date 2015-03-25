@@ -138,10 +138,7 @@ void TrackListCombiner::produce(edm::Event& ev, const edm::EventSetup& es)
                                  aTrack.seedDirection(),
                                  aTrack.seedRef());
     unsigned nHits = aTrack.recHitsSize();
-/*
-    for ( unsigned int ih=0; ih<nHits; ++ih)
-      aTrackExtra.add(TrackingRecHitRef(theRecoHits,hits++));
-*/
+
     aTrackExtra.setHits(hitCollProd, hits, nHits);
     hits += nHits;
     
