@@ -139,7 +139,7 @@ void TrackListCombiner::produce(edm::Event& ev, const edm::EventSetup& es)
     unsigned nHits = aTrack.recHitsSize();
     aTrackExtra.setHits(theRecoHitsProd,hits,nHits);
     hits +=nHits;
-    
+
     recoTrackExtras->push_back(aTrackExtra);
   }
   
