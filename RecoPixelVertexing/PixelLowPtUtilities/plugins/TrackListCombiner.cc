@@ -138,7 +138,6 @@ void TrackListCombiner::produce(edm::Event& ev, const edm::EventSetup& es)
                                  aTrack.seedDirection(),
                                  aTrack.seedRef());
     unsigned nHits = aTrack.recHitsSize();
-
     aTrackExtra.setHits(hitCollProd, hits, nHits);
     hits += nHits;
     
