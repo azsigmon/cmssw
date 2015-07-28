@@ -11,21 +11,20 @@ process.options = cms.untracked.PSet(
 
 process.source = cms.Source("PoolSource",
                             duplicateCheckMode = cms.untracked.string("noDuplicateCheck"),
-                            fileNames = cms.untracked.vstring('root://xrootd.unl.edu//store/user/tuos/HIAOD2015/round2version1/April30/MB/Hydjet_Quenched_MinBias_5020GeV/HydjetMB_AOD_74x_test01/150501_065033/0000/step2_RAW2DIGI_L1Reco_MB_AODSIM_103.root'),
+			    fileNames = cms.untracked.vstring('root://xrootd.unl.edu//store/user/tuos/HIAOD2015/round3/June01/MB/HIMinBiasUPC/MB_AOD_DATA750pre5_round3v01/150601_201116/0000/step2_RAW2DIGI_L1Reco_MB_AOD_1.root'),
 )
 
 process.maxEvents = cms.untracked.PSet(
             input = cms.untracked.int32(-1))
 
-process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_condDBv2_cff')
-
+process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 from Configuration.AlCa.GlobalTag import GlobalTag
-process.GlobalTag = GlobalTag(process.GlobalTag, 'MCHI2_74_V4', '')
 
+process.GlobalTag = GlobalTag(process.GlobalTag, '75X_mcRun2_HeavyIon_v2', '')
 process.GlobalTag.toGet.extend([
    cms.PSet(record = cms.string("HeavyIonRcd"),
-      tag = cms.string("CentralityTable_HFtowers200_HydjetDrum5_v740x01_mc"),
-      connect = cms.untracked.string("frontier://FrontierProd/CMS_COND_31X_PHYSICSTOOLS"),
+      tag = cms.string("CentralityTable_HFtowers200_HydjetDrum5_v750x02_mc"),
+      connect = cms.string("frontier://FrontierProd/CMS_CONDITIONS"),
       label = cms.untracked.string("HFtowersHydjetDrum5")
    ),
 ])
@@ -38,9 +37,7 @@ process.centralityBin.nonDefaultGlauberModel = cms.string("HydjetDrum5")
 process.TFileService = cms.Service("TFileService",
                                   fileName=cms.string("eventtree.root"))
 
-process.load('GeneratorInterface.HiGenCommon.HeavyIon_cff')
 
-#process.load('HeavyIonsAnalysis.EventAnalysis.hievtanalyzer_data_cfi')
-process.load('HeavyIonsAnalysis.EventAnalysis.hievtanalyzer_mc_cfi')
+process.load('HeavyIonsAnalysis.EventAnalysis.hievtanalyzer_data_cfi')
 
-process.p = cms.Path(process.heavyIon * process.centralityBin * process.hiEvtAnalyzer)
+process.p = cms.Path(process.centralityBin * process.hiEvtAnalyzer)
