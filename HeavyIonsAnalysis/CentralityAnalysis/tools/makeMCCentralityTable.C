@@ -47,11 +47,11 @@ void makeMCCentralityTable(int nbins = 200, const string label = "HFtowers", con
 
   TH1::SetDefaultSumw2();
 
-  TString inFileName = "/store/group/phys_heavyions/azsigmon/PbPb2015/eventtree_hydjet_740_d20150422.root";
+  TString inFileName = "/afs/cern.ch/user/a/azsigmon/workspace/CentralityTools/eventtree_hydjet_740_d20150422.root";
   TFile *inFile = TFile::Open(inFileName);
   TTree *t = (TTree*)inFile->Get("hiEvtAnalyzer/HiTree");
 
-  TString outFileName = "CentralityTable_HFtowers_HydjetDrum5_d20150424_v1.root";
+  TString outFileName = "CentralityTable_HFtowers_HydjetDrum5_d20150519_v1.root";
   TFile * outFile = new TFile(outFileName,"recreate");
   TDirectory* dir = outFile->mkdir(tag);
   dir->cd();
@@ -61,14 +61,14 @@ void makeMCCentralityTable(int nbins = 200, const string label = "HFtowers", con
   CentralityBins * bins = new CentralityBins(Form("run%d",runNum), tag, nbins);
   bins->table_.reserve(nbins);
 
-  ofstream txtfile("output_d20150424.txt");
+  ofstream txtfile("output_d20150519.txt");
   txtfile << "Input tree: " << inFileName << endl;
 
   double binboundaries[nbins+1];
   vector<float> values;
 
-  float b, hf, hfplus, hfpluseta4, hfminuseta4, hfminus, hfhit, ee, eb, zdc, zdcplus, zdcminus;
-  int run, lumi, npart, ncoll, nhard, npix, npixtrks, ntrks;
+  float b, npart, ncoll, nhard, hf, hfplus, hfpluseta4, hfminuseta4, hfminus, hfhit, ee, eb, zdc, zdcplus, zdcminus;
+  int run, lumi, npix, npixtrks, ntrks;
   t->SetBranchAddress("run",	&run);
   t->SetBranchAddress("lumi",	&lumi);
   t->SetBranchAddress("b",	&b);
