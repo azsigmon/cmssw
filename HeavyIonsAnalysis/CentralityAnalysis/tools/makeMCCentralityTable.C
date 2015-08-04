@@ -43,15 +43,15 @@ void fitSlices(TH2 *hCorr, TF1 *func) {
 
 }
 
-void makeMCCentralityTable(int nbins = 200, const string label = "HFtowers", const char * tag = "CentralityTable_HFtowers_HydjetDrum5_v740x01_mc") {
+void makeMCCentralityTable(int nbins = 200, const string label = "HFtowers", const char * tag = "CentralityTable_HFtowers_HydjetDrum5_v750x01_mc") {
 
   TH1::SetDefaultSumw2();
 
-  TString inFileName = "/afs/cern.ch/user/a/azsigmon/workspace/CentralityTools/eventtree_hydjet_740_d20150422.root";
+  TString inFileName = "/afs/cern.ch/user/a/azsigmon/workspace/CentralityTools/eventtree_hydjet_750_d20150729.root";
   TFile *inFile = TFile::Open(inFileName);
   TTree *t = (TTree*)inFile->Get("hiEvtAnalyzer/HiTree");
 
-  TString outFileName = "CentralityTable_HFtowers_HydjetDrum5_d20150519_v1.root";
+  TString outFileName = "CentralityTable_HFtowers_HydjetDrum5_d20150729_v1.root";
   TFile * outFile = new TFile(outFileName,"recreate");
   TDirectory* dir = outFile->mkdir(tag);
   dir->cd();
@@ -102,7 +102,7 @@ void makeMCCentralityTable(int nbins = 200, const string label = "HFtowers", con
 
   for(unsigned int iev = 0; iev < Nevents; iev++) {
 
-    if(iev%10000 == 0) cout<<"Processing event: " << iev << endl;
+    if(iev%50000 == 0) cout<<"Processing event: " << iev << endl;
     t->GetEntry(iev);
 
     float parameter = -1;
