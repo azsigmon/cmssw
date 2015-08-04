@@ -6,7 +6,7 @@ ivars.register ('outputTag',
                 mult=ivars.multiplicity.singleton,
                 mytype=ivars.varType.string,
                 info="for testing")
-ivars.outputTag="CentralityTable_HFtowers_HydjetDrum5_v740x01_mc"
+ivars.outputTag="CentralityTable_HFtowers_Glauber2015A_v750x01_mc"
 
 ivars.register ('inputFile',
                 mult=ivars.multiplicity.singleton,
@@ -18,8 +18,8 @@ ivars.register ('outputFile',
                 mytype=ivars.varType.string,
                 info="for testing")
 
-ivars.inputFile="./CentralityTable_HFtowers_HydjetDrum5_d20150519_v1.root"
-ivars.outputFile="./CentralityTable_HFtowers_HydjetDrum5_d20150519_v1.db"
+ivars.inputFile="./CentralityTable_HFtowers200_Glauber2015A_d20150804_v1.root"
+ivars.outputFile="./CentralityTable_HFtowers200_Glauber2015A_d20150804_v1.db"
 
 ivars.parseArguments()
 
@@ -31,7 +31,7 @@ process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(-1))
 process.source = cms.Source("EmptyIOVSource",
                             timetype = cms.string("runnumber"),
                             firstValue = cms.uint64(1),
-                            lastValue = cms.uint64(200),
+                            lastValue = cms.uint64(1),
                             interval = cms.uint64(1)
                             )
 

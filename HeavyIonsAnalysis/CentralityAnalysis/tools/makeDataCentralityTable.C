@@ -16,7 +16,7 @@ using namespace std;
 
 bool descend(float i,float j) { return (i>j); }
 
-void makeDataCentralityTable(int nbins = 200, const string label = "HFtowers", const char * tag = "CentralityTable_HFtowers_Glauber2015A_v750x01_mc", double EFF = 0.99){
+void makeDataCentralityTable(int nbins = 200, const string label = "HFtowers", const char * tag = "CentralityTable_HFtowers_Glauber2015A_eff99_v750x01_mc", double EFF = 0.99){
 
   TH1D::SetDefaultSumw2();
 
