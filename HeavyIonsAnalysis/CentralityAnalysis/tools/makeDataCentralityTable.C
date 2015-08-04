@@ -16,7 +16,7 @@ using namespace std;
 
 bool descend(float i,float j) { return (i>j); }
 
-void makeDataCentralityTable(int nbins = 200, const string label = "HFtowers", const char * tag = "CentralityTable_HFtowers_HydjetDrum5_v740x01_mc", double EFF = 0.99){
+void makeDataCentralityTable(int nbins = 200, const string label = "HFtowers", const char * tag = "CentralityTable_HFtowers_Glauber2015A_v750x01_mc", double EFF = 0.99){
 
   TH1D::SetDefaultSumw2();
 
@@ -37,6 +37,7 @@ void makeDataCentralityTable(int nbins = 200, const string label = "HFtowers", c
   CentralityBins * bins = new CentralityBins(Form("run%d",runNum), tag, nbins);
   bins->table_.reserve(nbins);
 
+  //Here we need a default Glauber for 5 TeV
   TFile * inputMCfile = TFile::Open("/afs/cern.ch/user/a/azsigmon/workspace/CentralityTools/d20150519/CentralityTable_HFtowers_HydjetDrum5_d20150519_v1.root");
   CentralityBins* inputMCtable = (CentralityBins*)inputMCfile->Get("CentralityTable_HFtowers_HydjetDrum5_v740x01_mc/run1");
 
