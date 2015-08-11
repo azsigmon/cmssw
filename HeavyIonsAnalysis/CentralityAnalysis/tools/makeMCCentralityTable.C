@@ -43,7 +43,7 @@ void fitSlices(TH2 *hCorr, TF1 *func) {
 
 }
 
-void makeMCCentralityTable(int nbins = 200, const string label = "HFtowers", const char * tag = "CentralityTable_HFtowers_HydjetDrum5_v750x01_mc") {
+void makeMCCentralityTable(int nbins = 200, const string label = "HFtowers", const char * tag = "CentralityTable_HFtowers200_HydjetDrum5_v750x01_mc") {
 
   TH1::SetDefaultSumw2();
 
@@ -61,7 +61,7 @@ void makeMCCentralityTable(int nbins = 200, const string label = "HFtowers", con
   CentralityBins * bins = new CentralityBins(Form("run%d",runNum), tag, nbins);
   bins->table_.reserve(nbins);
 
-  ofstream txtfile("output_d20150519.txt");
+  ofstream txtfile("output_d20150729.txt");
   txtfile << "Input tree: " << inFileName << endl;
 
   double binboundaries[nbins+1];

@@ -16,7 +16,7 @@ using namespace std;
 
 bool descend(float i,float j) { return (i>j); }
 
-void makeDataCentralityTable(int nbins = 200, const string label = "HFtowers", const char * tag = "CentralityTable_HFtowers_Glauber2015A_eff99_v750x01_mc", double EFF = 0.99){
+void makeDataCentralityTable(int nbins = 200, const string label = "HFtowers", const char * tag = "CentralityTable_HFtowers200_Glauber2010A_eff99_run1v750x01_offline", double EFF = 0.99){
 
   TH1D::SetDefaultSumw2();
 
@@ -27,21 +27,21 @@ void makeDataCentralityTable(int nbins = 200, const string label = "HFtowers", c
   TFile *inFile = TFile::Open(inFileName);
   TTree *t = (TTree*)inFile->Get("hiEvtAnalyzer/HiTree");
 
-  TFile *outFile = new TFile("CentralityTable_HFtowers200_Glauber2015A_d20150804_v1.root","recreate");
+  TFile *outFile = new TFile("CentralityTable_HFtowers200_Data_eff99_d20150811_v1.root","recreate");
 
   TDirectory *dir = outFile->mkdir(tag);
   dir->cd();
-  TNtuple * nt = new TNtuple("nt","","value:bin:b:npart:ncoll:nhard");
+  TNtuple * nt = new TNtuple("nt","","value");
 
   const int runNum = 1;
   CentralityBins * bins = new CentralityBins(Form("run%d",runNum), tag, nbins);
   bins->table_.reserve(nbins);
 
-  //Here we need a default Glauber for 5 TeV
-  TFile * inputMCfile = TFile::Open("/afs/cern.ch/user/a/azsigmon/workspace/CentralityTools/d20150519/CentralityTable_HFtowers_HydjetDrum5_d20150519_v1.root");
-  CentralityBins* inputMCtable = (CentralityBins*)inputMCfile->Get("CentralityTable_HFtowers_HydjetDrum5_v740x01_mc/run1");
+  //Here we need the default Glauber for 2.76 or 5 TeV
+  TFile * inputMCfile = TFile::Open("/afs/cern.ch/user/a/azsigmon/workspace/CentralityTools/d20150729/CentralityTable_HFtowers200_HydjetDrum2760_20150729_v1.root");
+  CentralityBins* inputMCtable = (CentralityBins*)inputMCfile->Get("CentralityTable_HFtowers200_HydjetDrum_run1v750x01_mc/run1");
 
-  ofstream txtfile("output_d20150804.txt");
+  ofstream txtfile("output_d20150811.txt");
   txtfile << "Input tree: " << inFileName << endl;
 
   double binboundaries[nbins+1];
@@ -94,6 +94,7 @@ void makeDataCentralityTable(int nbins = 200, const string label = "HFtowers", c
     if(binNtrks) parameter = ntrks;
 
     values.push_back(parameter);
+    nt->Fill(parameter);
 
   }
 
