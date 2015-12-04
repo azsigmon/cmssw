@@ -15,7 +15,7 @@ import subprocess
 version = subprocess.Popen(["(cd $CMSSW_BASE/src && git describe --tags)"], stdout=subprocess.PIPE, shell=True).stdout.read()
 if version == '':
     version = 'no git info'
-process.HiForest.HiForestVersion = cms.untracked.string(version)
+process.HiForest.HiForestVersion = cms.string(version)
 
 #####################################################################################
 # Input source
@@ -24,7 +24,7 @@ process.HiForest.HiForestVersion = cms.untracked.string(version)
 process.source = cms.Source("PoolSource",
                             duplicateCheckMode = cms.untracked.string("noDuplicateCheck"),
                             # fileNames = cms.untracked.vstring("file:/mnt/hadoop/cms/store/user/dgulhan/HIHighPt/HIHighPt_photon20and30_HIRun2011-v1_RECO_753_patch1/fd44351629dd155a25de2b4c109c824c/RECO_100_1_Uk0.root")                        )
-                            fileNames = cms.untracked.vstring('/store/data/Run2015E/HighPtJet80/AOD/PromptReco-v1/000/262/272/00000/803A4255-7696-E511-B178-02163E0142DD.root')
+                            fileNames = cms.untracked.vstring('/store/data/Run2015E/SingleMuHighPt/AOD/PromptReco-v1/000/262/163/00000/C88B56BC-ED91-E511-BA84-02163E01423E.root')
 )
 
 #import FWCore.PythonUtilities.LumiList as LumiList
@@ -32,7 +32,7 @@ process.source = cms.Source("PoolSource",
 
 # Number of events we want to process, -1 = all events
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(1000))
+    input = cms.untracked.int32(-1))
 
 
 
