@@ -18,6 +18,7 @@
 #include "DataFormats/METReco/interface/CaloMETCollection.h"
 #include "DataFormats/METReco/interface/PFMET.h"
 #include "DataFormats/METReco/interface/PFMETCollection.h"
+#include "DataFormats/HeavyIonEvent/interface/Centrality.h"
 #include "FWCore/Framework/interface/Event.h"
 #include "FWCore/Framework/interface/ConsumesCollector.h"
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
@@ -177,6 +178,8 @@ class BaseTreeFiller : boost::noncopyable {
         edm::EDGetTokenT<reco::CaloMETCollection> metToken_;
         edm::EDGetTokenT<reco::METCollection> tcmetToken_;
         edm::EDGetTokenT<reco::PFMETCollection> pfmetToken_;
+        edm::EDGetTokenT<reco::Centrality> centralityToken_;
+        edm::EDGetTokenT<int> centralityBinToken_;
 
         /// Ignore exceptions when evaluating variables
         bool ignoreExceptions_;
@@ -189,6 +192,9 @@ class BaseTreeFiller : boost::noncopyable {
 
         /// Add branches with event variables: met, sum ET, .. etc.
 	bool addEventVariablesInfo_;
+
+	/// Add branches from centrality object for heavy ions
+	bool addCentralityInfo_;
 
         void addBranches_(TTree *tree, const edm::ParameterSet &iConfig, edm::ConsumesCollector & iC, const std::string &branchNamePrefix="") ;
 
@@ -203,6 +209,13 @@ class BaseTreeFiller : boost::noncopyable {
 
         mutable float mMET_,mSumET_,mMETSign_,mtcMET_,mtcSumET_,
 	  mtcMETSign_,mpfMET_,mpfSumET_,mpfMETSign_;
+
+	mutable int hiNtracks_, hiNtracksPtCut_, hiNtracksEtaCut_, 
+          hiNtracksEtaPtCut_, hiBin_, hiNpix_, hiNpixelTracks_;
+
+   	mutable float hiHF_, hiHFplus_, hiHFminus_, hiHFplusEta4_,
+	  hiHFminusEta4_, hiHFeta4_, hiZDC_, hiZDCplus_, hiZDCminus_,
+	  hiEEplus_, hiEEminus_, hiEE_, hiEB_, hiET_;
 };
 
 
