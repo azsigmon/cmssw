@@ -194,7 +194,7 @@ class BaseTreeFiller : boost::noncopyable {
 	bool addEventVariablesInfo_;
 
 	/// Add branches from centrality object for heavy ions
-	bool addCentralityInfo_;
+	bool addCentralityInfo_ = false;
 
         void addBranches_(TTree *tree, const edm::ParameterSet &iConfig, edm::ConsumesCollector & iC, const std::string &branchNamePrefix="") ;
 
